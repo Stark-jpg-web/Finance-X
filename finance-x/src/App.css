@@ -1,1 +1,29 @@
+
 @import "tailwindcss";
+*{
+    font-family: 'Inter', sans-serif;
+}
+@theme {
+  /* backgrounds */
+  --color-bg: #111111;
+  --color-surface: #1e1e1e;
+  --color-elevated: #1a1a1a;
+  --color-border: #2a2a2a;
+
+  /* text */
+  --color-text-primary: #ffffff;
+  --color-text-secondary: #aaaaaa;
+  --color-text-muted: #555555;
+
+  /* semantic */
+  --color-income: #1D9E75;
+  --color-expense: #D85A30;
+  --color-balance: #ffffff;
+
+  /* categories */
+  --color-cat-food: #534AB7;
+  --color-cat-rent: #D85A30;
+  --color-cat-transport: #1D9E75;
+  --color-cat-salary: #1D9E75;
+  --color-cat-other: #BA7517;
+}

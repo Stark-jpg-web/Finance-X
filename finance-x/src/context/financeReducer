@@ -1,0 +1,24 @@
+
+
+export function financeReducer(state, action) {
+    switch(action.type) {
+case 'ADD_TRANSACTION':
+    return [
+        ...state,
+        action.payload
+    ]
+
+case 'DELETE_TRANSACTION':
+    return [
+        ...state,
+      action.payload
+    ]
+case 'EDIT  _TRANSACTION':
+    return [
+        state.map(transaction => transaction.id === action.payload.id ? action.payload : transaction)
+    ]
+
+        default:
+            return state
+    }
+}
