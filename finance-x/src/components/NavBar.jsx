@@ -20,7 +20,8 @@ export default function NavBar() {
     key={link.to}
     to={link.to}
     className={({isActive})  => isActive ? "bg-border px-4 py-1.5 rounded-md text-text-primary" : ""}
-    >   {link.label}
+    >   
+    {link.label}
     </NavLink>
 ))}
 </nav>
