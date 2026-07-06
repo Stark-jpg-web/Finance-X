@@ -10,13 +10,12 @@ case 'ADD_TRANSACTION':
 
 case 'DELETE_TRANSACTION':
     return [
-        ...state,
-      action.payload
+      state.filter(transaction => transaction.id !== action.payload.id)
     ]
-case 'EDIT  _TRANSACTION':
-    return [
+case 'EDIT_TRANSACTION':
+    return 
         state.map(transaction => transaction.id === action.payload.id ? action.payload : transaction)
-    ]
+    
 
         default:
             return state
