@@ -27,3 +27,12 @@
   --color-cat-salary: #1D9E75;
   --color-cat-other: #BA7517;
 }
+.metric-card{
+  @apply flex flex-col justify-center items-start gap-0.5 bg-surface border-b-elevated rounded-lg p-3.5
+}
+h3{
+  @apply text-[#555] text-[11px] uppercase space-x-[0.5px] mb-1.5
+}
+.card-value{
+  @apply  text-2xl font-medium
+}
