@@ -9,6 +9,21 @@ export default function Dashboard() {
     const { transactions, dispatch } = useContext(FinanceContext)
     const { monthlyLineChartData } = useCharData()
 
+    const recentTransactions = [
+      { id: 1, title: 'Salary', amount: '$3,200.00', type: 'income' },
+      { id: 2, title: 'Groceries', amount: '$84.50', type: 'expense' },
+      { id: 3, title: 'Freelance Project', amount: '$500.00', type: 'income' },
+      { id: 4, title: 'Utilities', amount: '$120.00', type: 'expense' },
+    ];
+
+    const spendingCategories = [
+      { name: 'Food', amount: '$0.00', colorClass: 'text-cat-food' },
+      { name: 'Rent', amount: '$0.00', colorClass: 'text-cat-rent' },
+      { name: 'Transport', amount: '$0.00', colorClass: 'text-cat-transport' },
+      { name: 'Other', amount: '$0.00', colorClass: 'text-cat-other' },
+      { name: 'Entertainment', amount: '$0.00', colorClass: 'text-cat-entertainment' },
+    ];
+
     // Bar chart
     const formatAxisTick = (value) => {
       return `*${value}*`;
@@ -63,7 +78,7 @@ export default function Dashboard() {
 
 <h3 className="text-2xl font-bold mb-5  self-start ">Monthly Income vs  Expenses</h3>
 
- <BarChart width={600} height={500} data={monthlyLineChartData} margin={{ top: 80, right: 50, left: 50, bottom: 80 }}>
+ <BarChart width="80%" height={500} data={monthlyLineChartData} margin={{ top: 80, right: 50, left: 50, bottom: 80 }}>
       <XAxis
         dataKey="month"
         tickFormatter={formatAxisTick}
@@ -74,6 +89,56 @@ export default function Dashboard() {
       <Bar dataKey="income" name="Income" fill="#10b981" label={renderIncomeLabel} />
       <Bar dataKey="expense" name="Expense" fill="#D85A30" label={renderExpenseLabel} />
     </BarChart>
+
+</div>
+
+<div className="transactions flex min-h-full justify-around gap-5">
+
+
+  
+
+<ol className="recent-transactions-list w-1/2">
+  <h3 className="text-lg font-semibold mb-2">Recent Transactions</h3>
+  {recentTransactions.map((item) => {
+    const transactionColorClass = item.type === 'income' ? 'text-income' : 'text-expense';
+
+    return (
+      <li key={item.id} className={`${transactionColorClass} list-none`}>
+        <div className="flex items-center gap-2.5 w-full">
+          <span className="inline-block h-2.5 w-2.5 rounded-full shrink-0" style={{ backgroundColor: item.type === 'income' ? '#1D9E75' : '#D85A30' }} />
+          <div className="flex justify-between items-center gap-2.5 flex-1">
+            <span>{item.title}</span>
+            <span className="font-bold">{item.amount}</span>
+          </div>
+        </div>
+      </li>
+    );
+  })}
+</ol>
+
+
+<div className="all-transactions w-1/2">
+  <h3>spending by category</h3>
+  <ol className="spending-category-list">
+    {spendingCategories.map((item) => (
+      <li key={item.name} className={`${item.colorClass} list-none`}>
+        <div className="flex items-center gap-2.5 w-full">
+        
+          <span className="inline-block h-2.5 w-2.5 rounded-full shrink-0" style={{ backgroundColor: item.colorClass.includes('food') ? '#534AB7' : item.colorClass.includes('rent') ? '#D85A30' : item.colorClass.includes('transport') ? '#1D9E75' : item.colorClass.includes('other') ? '#BA7517' : '#F59E0B' }} />
+          <div className="flex justify-between items-center gap-2.5 flex-1">
+            <span>{item.name}</span>
+            <span>$0.00</span>
+          </div>
+        </div>
+      </li>
+    ))}
+  </ol>
+</div>
+
+
+
+
+
 
 </div>
 
