@@ -127,6 +127,22 @@ export default function Dashboard() {
           <span className="inline-block h-2.5 w-2.5 rounded-full shrink-0" style={{ backgroundColor: item.colorClass.includes('food') ? '#534AB7' : item.colorClass.includes('rent') ? '#D85A30' : item.colorClass.includes('transport') ? '#1D9E75' : item.colorClass.includes('other') ? '#BA7517' : '#F59E0B' }} />
           <div className="flex justify-between items-center gap-2.5 flex-1">
             <span>{item.name}</span>
+
+  <div className="range-group">
+      
+      <input
+        type="range"
+        min="0"
+        max={item.amount}
+        value={0}
+
+        
+      />
+  
+    </div>
+
+
+
             <span>$0.00</span>
           </div>
         </div>
