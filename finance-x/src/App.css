@@ -70,3 +70,25 @@ li {
 label{
   @apply text-sm text-[#aaa]
 }
+
+
+.toggle-btn{
+  flex: 1;
+  padding: 6px;
+  border: none;
+  border-radius: 4px;
+  background: transparent;
+  color: #555555;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  text-align: center;
+}
+
+.toggle-btn.income.active{
+ @apply bg-income text-text-primary
+}
+.toggle-btn.expense.active{
+  @apply bg-expense text-text-primary
+
+}

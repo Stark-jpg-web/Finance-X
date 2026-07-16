@@ -24,16 +24,67 @@ export default function Dashboard() {
       { name: 'Entertainment', amount: '$0.00', colorClass: 'text-cat-entertainment' },
     ];
 
+function incomeCalcualtor(){
+  let totalIncome = 0;
+  transactions.forEach(transaction => {
+    if(transaction.type === "income"){
+      totalIncome += Number(transaction.amount || 0);
+    }
+  });
+  return totalIncome;
+}
+
+function expenseCalcualtor(){
+  let totalExpenses = 0;
+  transactions.forEach(transaction => {
+    if(transaction.type === "expense"){
+      totalExpenses += Number(transaction.amount || 0);
+    }
+  });
+  return totalExpenses;
+}
+
+function balanceCalculator(){
+  const totalIncome = incomeCalcualtor();
+  const totalExpenses = expenseCalcualtor();
+  return totalIncome - totalExpenses;
+}
+
+
+const Transactionlimiter=[...transactions].sort((a,b)=> new Date(b.date)- new Date(a.date)).slice(0,5)
+
+
+const categoryColors = {
+  Food: '#534AB7',
+  Rent: '#D85A30',
+  Transport: '#1D9E75',
+  Other: '#BA7517',
+  Entertainment: '#F59E0B',
+  Salary: '#10b981',
+  default: '#6B7280'
+};
+
+function getCategoryColor(category) {
+  return categoryColors[category] || categoryColors.default;
+}
+
     // Bar chart
-    const formatAxisTick = (value) => {
-      return `*${value}*`;
-    };
+    function formatAxisTick(value) {
+    return `*${value}*`;
+  }
+
+    const maxChartValue = Math.max(
+      ...monthlyLineChartData.map((item) => Math.max(item.income, item.expense)),
+      0
+    );
+
+    const yAxisMax = maxChartValue + 200;
 
     const renderIncomeLabel = ({ x, y, width, value }) => {
       if (value == null) return null;
       return (
-        <text x={x + width / 2} y={y} fill="#10b981" textAnchor="middle" dy={-16}>
-          Income
+        <text x={x + width / 2} y={y} fill="#10b981" textAnchor="middle" dy={-10}>
+          {`$${value.toFixed(0)}`}
         </text>
       );
     };
@@ -41,8 +92,8 @@ export default function Dashboard() {
     const renderExpenseLabel = ({ x, y, width, value }) => {
       if (value == null) return null;
       return (
-        <text x={x + width / 2} y={y} fill="#D85A30" textAnchor="middle" dy={-16}>
-          Expense
+        <text x={x + width / 2} y={y} fill="#D85A30" textAnchor="middle" dy={-10}>
+          {`$${value.toFixed(0)}`}
         </text>
       );
     };
@@ -50,7 +101,7 @@ export default function Dashboard() {
 
     return(
 
-<div className="dashboard bg-bg text-text-primary p-5 flex flex-col gap-5">
+<div className="dashboard min-h-screen bg-bg text-text-primary p-5 flex flex-col gap-5">
 
 
 <h3 className="text-2xl font-bold mb-5 text-text-primary">Overview</h3>
@@ -60,17 +111,17 @@ export default function Dashboard() {
 
 <div className="metric-card ">
     <h3 className="card-label text-income ">$ TOTAL INCOME</h3>
-    <p className='card-value text-income'>$ 0000</p>
+    <p className='card-value text-income'>$ {incomeCalcualtor()}</p>
 </div>
 
 <div className="metric-card">
     <h3 className="card-label text-expense">TOTAL EXPENSES</h3>
-    <p className="card-value text-expense">$ 0000</p>
+    <p className="card-value text-expense">$ {expenseCalcualtor()}</p>
 </div>
 
 <div className="metric-card ">
     <h3 className="card-label ">BALANCE</h3>
-    <p className="card-value ">$ 0000</p> 
+    <p className="card-value ">${balanceCalculator()}</p> 
 </div>
 </div> 
 
@@ -82,10 +133,10 @@ export default function Dashboard() {
       <XAxis
         dataKey="month"
         tickFormatter={formatAxisTick}
-        tickMargin={20}
+        tickMargin={30}
         label={{ position: 'insideBottomRight', value: 'Month', offset: -20, dy: 5 }}
       />
-      <YAxis label={{ position: 'insideTopLeft', value: 'Amount', angle: -90, dy: 42, dx: -10 }} />
+      <YAxis domain={[0, yAxisMax]} label={{ position: 'insideTopLeft', value: 'Amount', angle: -90, dy: 42, dx: -10 }} />
       <Bar dataKey="income" name="Income" fill="#10b981" label={renderIncomeLabel} />
       <Bar dataKey="expense" name="Expense" fill="#D85A30" label={renderExpenseLabel} />
     </BarChart>
@@ -99,7 +150,7 @@ export default function Dashboard() {
 
 <ol className="recent-transactions-list w-1/2">
   <h3 className="text-lg font-semibold mb-2">Recent Transactions</h3>
-  {recentTransactions.map((item) => {
+  {Transactionlimiter.slice(0,5).map((item) => {
     const transactionColorClass = item.type === 'income' ? 'text-income' : 'text-expense';
 
     return (
@@ -107,7 +158,7 @@ export default function Dashboard() {
         <div className="flex items-center gap-2.5 w-full">
           <span className="inline-block h-2.5 w-2.5 rounded-full shrink-0" style={{ backgroundColor: item.type === 'income' ? '#1D9E75' : '#D85A30' }} />
           <div className="flex justify-between items-center gap-2.5 flex-1">
-            <span>{item.title}</span>
+            <span>{item.category}</span>
             <span className="font-bold">{item.amount}</span>
           </div>
         </div>
@@ -120,30 +171,13 @@ export default function Dashboard() {
 <div className="all-transactions w-1/2">
   <h3>spending by category</h3>
   <ol className="spending-category-list">
-    {spendingCategories.map((item) => (
-      <li key={item.name} className={`${item.colorClass} list-none`}>
+    {Transactionlimiter.map((item) => (
+      <li key={item.id} className="list-none">
         <div className="flex items-center gap-2.5 w-full">
-        
-          <span className="inline-block h-2.5 w-2.5 rounded-full shrink-0" style={{ backgroundColor: item.colorClass.includes('food') ? '#534AB7' : item.colorClass.includes('rent') ? '#D85A30' : item.colorClass.includes('transport') ? '#1D9E75' : item.colorClass.includes('other') ? '#BA7517' : '#F59E0B' }} />
+          <span className="inline-block h-2.5 w-2.5 rounded-full shrink-0" style={{ backgroundColor: getCategoryColor(item.category) }} />
           <div className="flex justify-between items-center gap-2.5 flex-1">
-            <span>{item.name}</span>
-
-  <div className="range-group">
-      
-      <input
-        type="range"
-        min="0"
-        max={item.amount}
-        value={0}
-
-        
-      />
-  
-    </div>
-
-
-
-            <span>$0.00</span>
+            <span>{item.category}</span>
+            <span>{item.amount}</span>
           </div>
         </div>
       </li>

@@ -2,7 +2,7 @@ import {createContext} from "react";
 import {useReducer} from "react";
 import {useEffect} from "react";
 import {financeReducer} from "./financeReducer"
-import { seedData } from "../data/seedData"
+
 
 export const FinanceContext=createContext([])
 
@@ -12,7 +12,7 @@ export function FinanceProvider({children}) {
  
 
 //saves data to local storage and retrieves it when the app is reloaded
-    const saved = JSON.parse(localStorage.getItem("transactions")) || seedData;
+    const saved = JSON.parse(localStorage.getItem("transactions")) || [];
 //log local storage data to console
 console.log("saved:", saved);
 
