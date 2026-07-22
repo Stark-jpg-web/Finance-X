@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
+import logo from "../assets/logo.png";
 
 const links = [
   { to: '/', label: 'Dashboard' },
@@ -18,7 +19,8 @@ export default function NavBar() {
   return (
     <nav className="border-b border-border bg-surface/95 px-4 py-4 sm:px-6 lg:px-10">
       <div className="mx-auto flex  max-w-7xl items-center justify-between">
-        <NavLink to="/" className="text-xl font-semibold text-text-primary sm:text-2xl lg:text-3xl xl:text-4xl">
+        <NavLink to="/" className="flex text-xl font-semibold text-text-primary sm:text-2xl lg:text-3xl xl:text-4xl">
+           <img src={logo} alt="Finance-X Logo" />
           Finance-X
         </NavLink>
 
