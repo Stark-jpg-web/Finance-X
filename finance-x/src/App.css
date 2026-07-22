@@ -64,7 +64,7 @@ body {
 }
 
 .metric-value {
-  @apply text-2xl font-semibold text-text-primary;
+  @apply text-2xl font-semibold ;
 }
 
 .transaction-row {
