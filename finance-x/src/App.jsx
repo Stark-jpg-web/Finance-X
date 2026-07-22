@@ -21,7 +21,6 @@ function App() {
        <Route path="/" element={<Dashboard />} />
        <Route path="/transactions" element={<Transactions />} />
        <Route path="/add" element={<AddTransaction />} />
-       <Route path="/settings" element={<Settings />} />
      </Routes>
       </main>
      </BrowserRouter>

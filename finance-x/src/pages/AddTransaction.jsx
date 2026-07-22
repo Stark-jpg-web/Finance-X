@@ -8,6 +8,7 @@ export default function AddTransaction() {
   const [category, setCategory] = useState('');
   const [date, setDate] = useState('');
   const [note, setNote] = useState('');
+  
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -32,7 +33,6 @@ export default function AddTransaction() {
       category,
       date,
       note,
-      colorClass
     };
 
     dispatch({ type: 'ADD_TRANSACTION', payload: newTransaction });

@@ -50,6 +50,3 @@ export function useCharData() {
 
   return { monthlyLineChartData, categoryPieChartData }
 }
-
-
-

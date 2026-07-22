@@ -15,7 +15,9 @@ case 'DELETE_TRANSACTION':
 case 'EDIT_TRANSACTION':
     return 
         state.map(transaction => transaction.id === action.payload.id ? action.payload : transaction)
-    
+
+case 'CLEAR_ALL':
+    return []
 
         default:
             return state
