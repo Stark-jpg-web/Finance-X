@@ -108,7 +108,7 @@ export default function Dashboard() {
       <div className="section-card flex flex-col gap-5 p-4 sm:p-6">
         <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
           <h3 className="section-title mb-0 text-[11px] sm:text-[12px] lg:text-[13px] xl:text-[14px]">Monthly Income vs Expenses</h3>
-          <p className="text-[11px] uppercase tracking-[0.25em] text-text-secondary sm:text-xs lg:text-sm xl:text-base">Last 6 months</p>
+          {/*<p className="text-[11px] uppercase tracking-[0.25em] text-text-secondary sm:text-xs lg:text-sm xl:text-base">Last 6 months</p>*/}
         </div>
 
         <div className="h-[320px] w-full">
@@ -134,54 +134,91 @@ export default function Dashboard() {
       <div className="grid gap-5 lg:grid-cols-[1.1fr_0.9fr]">
         <section className="list-card p-4 sm:p-5">
           <h3 className="section-title text-[11px] sm:text-[12px] lg:text-[13px] xl:text-[14px]">Recent Transactions</h3>
-          <ol className="flex flex-col gap-2">
-            {transactionLimiter.map((item) => (
-              <li key={item.id} className="transaction-row">
-                <span className={`transaction-dot ${item.type === 'income' ? 'bg-income' : 'bg-expense'}`} />
-                <div className="flex flex-1 items-start justify-between gap-3">
-                  <div className="flex min-w-0 flex-col">
-                    <span
-                      className={`transaction-category ${item.type === 'income' ? 'is-income' : 'is-expense'}`}
-                      style={{ color: getCategoryColor(item.category) }}
-                    >
-                      {item.category}
+          {transactionLimiter.length === 0 ? (
+            <p className="empty-state">No recent transactions to show yet.</p>
+          ) : (
+            <ol className="flex flex-col gap-2">
+              {transactionLimiter.map((item) => (
+                <li key={item.id} className="transaction-row">
+                  <span className={`transaction-dot ${item.type === 'income' ? 'bg-income' : 'bg-expense'}`} />
+                  <div className="flex flex-1 items-start justify-between gap-3">
+                    <div className="flex min-w-0 flex-col">
+                      <span
+                        className={`transaction-category ${item.type === 'income' ? 'is-income' : 'is-expense'}`}
+                        style={{ color: getCategoryColor(item.category) }}
+                      >
+                        {item.category}
+                      </span>
+                      {item.note ? <span className="transaction-note">{item.note}</span> : null}
+                    </div>
+                    <span className={`shrink-0 font-semibold ${item.type === 'income' ? 'text-income' : 'text-expense'}`}>
+                      {item.type === 'income' ? '+' : '-'} ${item.amount}
                     </span>
-                    {item.note ? <span className="transaction-note">{item.note}</span> : null}
                   </div>
-                  <span className={`shrink-0 font-semibold ${item.type === 'income' ? 'text-income' : 'text-expense'}`}>
-                    {item.type === 'income' ? '+' : '-'} ${item.amount}
-                  </span>
-                </div>
-              </li>
-            ))}
-          </ol>
+                </li>
+              ))}
+            </ol>
+          )}
         </section>
 
         <section className="list-card p-4 sm:p-5">
-          <h3 className="section-title text-[11px] sm:text-[12px] lg:text-[13px] xl:text-[14px]">Spending by Category</h3>
-          <ol className="flex flex-col gap-2">
-            {transactionLimiter
-              .filter((item) => item.type === 'expense')
-              .map((item) => (
-                <li key={item.id} className="transaction-row">
-                  <span className="transaction-dot bg-expense" />
-                  <div className="flex flex-1 items-start justify-between gap-3">
-                  <div className="flex min-w-0 flex-col">
-                    <span
-                      className={`transaction-category ${item.type === 'income' ? 'is-income' : 'is-expense'}`}
-                      style={{ color: getCategoryColor(item.category) }}
-                    >
-                      {item.category}
-                    </span>
-                    {item.note ? <span className="transaction-note">{item.note}</span> : null}
-                  </div>
-                  <span className={`shrink-0 font-semibold ${item.type === 'income' ? 'text-income' : 'text-expense'}`}>
-                    {item.type === 'income' ? '+' : '-'} ${item.amount}
-                  </span>
-                </div>
-                </li>
-              ))}
-          </ol>
+          <h3 className="section-title text-[11px] sm:text-[12px] lg:text-[13px] xl:text-[14px]">Recent Spending</h3>
+          {transactionLimiter.filter((item) => item.type === 'expense').length === 0 ? (
+            <p className="empty-state">No expense data to show.</p>
+          ) : (
+            <ol className="flex flex-col gap-2">
+              {transactionLimiter
+                .filter((item) => item.type === 'expense')
+                .map((item) => (
+                  <li key={item.id} className="transaction-row">
+                    <span className="transaction-dot bg-expense" />
+                    <div className="flex flex-1 items-start justify-between gap-3">
+                      <div className="flex min-w-0 flex-col">
+                        <span
+                          className="transaction-category is-expense"
+                          style={{ color: getCategoryColor(item.category) }}
+                        >
+                          {item.category}
+                        </span>
+                        {item.note ? <span className="transaction-note">{item.note}</span> : null}
+                      </div>
+                      <span className="shrink-0 font-semibold text-expense">-${item.amount}</span>
+                    </div>
+                  </li>
+                ))}
+            </ol>
+          )}
+        </section>
+      </div>
+
+      <div className="grid gap-5 lg:grid-cols-1">
+        <section className="list-card p-4 sm:p-5">
+          <h3 className="section-title text-[11px] sm:text-[12px] lg:text-[13px] xl:text-[14px]">Recent Income</h3>
+          {transactionLimiter.filter((item) => item.type === 'income').length === 0 ? (
+            <p className="empty-state">No income data to show.</p>
+          ) : (
+            <ol className="flex flex-col gap-2">
+              {transactionLimiter
+                .filter((item) => item.type === 'income')
+                .map((item) => (
+                  <li key={item.id} className="transaction-row">
+                    <span className="transaction-dot bg-income" />
+                    <div className="flex flex-1 items-start justify-between gap-3">
+                      <div className="flex min-w-0 flex-col">
+                        <span
+                          className="transaction-category is-income"
+                          style={{ color: getCategoryColor(item.category) }}
+                        >
+                          {item.category}
+                        </span>
+                        {item.note ? <span className="transaction-note">{item.note}</span> : null}
+                      </div>
+                      <span className="shrink-0 font-semibold text-income">+${item.amount}</span>
+                    </div>
+                  </li>
+                ))}
+            </ol>
+          )}
         </section>
       </div>
 

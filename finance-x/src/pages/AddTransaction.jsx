@@ -42,7 +42,7 @@ export default function AddTransaction() {
     setDate('');
     setNote('');
 
-    console.log("submitting", newTransaction)
+    console.log('submitting', newTransaction);
   }
 
   return (
