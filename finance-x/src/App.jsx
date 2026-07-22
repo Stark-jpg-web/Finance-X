@@ -1,13 +1,11 @@
-import { useState } from 'react'
-import { BrowserRouter, Routes, Route } from "react-router-dom"
-import { FinanceProvider } from './context/FinanceContext'
-import './App.css'
-import NavBar from './components/NavBar'
-import Dashboard from './pages/Dashboard'
-import Transactions from './pages/Transactions'
-import AddTransaction from './pages/AddTransaction'
-
-
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { FinanceProvider } from './context/FinanceContext';
+import './App.css';
+import NavBar from './components/NavBar';
+import Dashboard from './pages/Dashboard';
+import Transactions from './pages/Transactions';
+import AddTransaction from './pages/AddTransaction';
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 function App() {
  
