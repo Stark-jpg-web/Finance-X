@@ -2,7 +2,7 @@ import { useContext, useState } from 'react';
 import { FinanceContext } from '../context/FinanceContext';
 
 export default function AddTransaction() {
-  const { dispatch } = useContext(FinanceContext);
+  const { transactions,dispatch } = useContext(FinanceContext);
   const [type, setType] = useState('income');
   const [amount, setAmount] = useState('');
   const [category, setCategory] = useState('');
@@ -25,12 +25,15 @@ export default function AddTransaction() {
       alert('Please enter a date');
       return;
     }
+    
+
+    const normalizedCategory = category.trim().toLowerCase();
 
     const newTransaction = {
       id: Date.now(),
       amount: parseFloat(amount),
       type,
-      category,
+      category: normalizedCategory,
       date,
       note,
     };
