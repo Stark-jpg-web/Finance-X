@@ -17,11 +17,11 @@ export default function NavBar() {
       : 'rounded-md px-4 py-2 text-sm text-text-secondary transition hover:bg-elevated hover:text-text-primary sm:text-[15px] lg:text-base xl:text-lg';
 
   return (
-    <nav className="border-b border-border bg-surface/95 px-4 py-4 sm:px-6 lg:px-10">
-      <div className="mx-auto flex  max-w-7xl items-center justify-between">
-        <NavLink to="/" className="flex text-xl font-semibold text-text-primary sm:text-2xl lg:text-3xl xl:text-4xl">
-           <img src={logo} alt="Finance-X Logo" />
-          Finance-X
+    <nav className="border-b border-border bg-surface/95 px-3 py-4 sm:px-6 lg:px-8">
+      <div className="flex w-full items-center justify-between gap-4">
+        <NavLink to="/" className="flex items-center gap-2 text-xl font-semibold text-text-primary sm:text-2xl lg:text-3xl xl:text-4xl">
+          <img src={logo} alt="Finance-X Logo" className="h-8 w-8 rounded-md object-contain sm:h-9 sm:w-9 lg:h-10 lg:w-10" />
+          <span>Finance-X</span>
         </NavLink>
 
         <button

@@ -6,7 +6,7 @@ import NavBar from './components/NavBar'
 import Dashboard from './pages/Dashboard'
 import Transactions from './pages/Transactions'
 import AddTransaction from './pages/AddTransaction'
-import Settings from './pages/Settings'
+
 
 
 function App() {
