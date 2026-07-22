@@ -2,11 +2,12 @@ import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from 'recharts';
 import { useContext } from 'react';
 import { FinanceContext } from '../context/FinanceContext';
 import { useCharData } from '../hooks/useCharData';
+import {colors} from "../utils/colors"
 
 export default function Dashboard() {
   const { transactions, dispatch } = useContext(FinanceContext);
   const { monthlyLineChartData } = useCharData();
-
+const cateColors=colors.cat
   function incomeCalculator() {
     let totalIncome = 0;
     transactions.forEach((transaction) => {
@@ -41,18 +42,10 @@ export default function Dashboard() {
     .sort((a, b) => new Date(b.date) - new Date(a.date))
     .slice(0, 5);
 
-  const categoryColors = {
-    Food: '#534AB7',
-    Rent: '#D85A30',
-    Transport: '#1D9E75',
-    Other: '#BA7517',
-    Entertainment: '#F59E0B',
-    Salary: '#10b981',
-    default: '#6B7280',
-  };
+
 
   function getCategoryColor(category) {
-    return categoryColors[category] || categoryColors.default;
+    return cateColors[category] || cateColors.default;
   }
 
   function formatAxisTick(value) {

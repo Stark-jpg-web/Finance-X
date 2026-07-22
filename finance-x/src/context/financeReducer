@@ -9,12 +9,15 @@ case 'ADD_TRANSACTION':
     ]
 
 case 'DELETE_TRANSACTION':
-    return [
+    return (
       state.filter(transaction => transaction.id !== action.payload.id)
-    ]
-case 'EDIT_TRANSACTION':
-    return 
-        state.map(transaction => transaction.id === action.payload.id ? action.payload : transaction)
+    )
+case "EDIT_TRANSACTION":
+  return state.map(transaction =>
+    transaction.id === action.payload.id
+      ? action.payload
+      : transaction
+  );
 
 case 'CLEAR_ALL':
     return []
